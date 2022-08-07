@@ -3,6 +3,9 @@ import User from '../models/User.js';
 import CryptoJS from 'crypto-js';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import { pwCheck } from '../libs/passwordChecker.js';
+import { usernameChecker } from '../libs/usernameChecker.js';
+import { emailChecker } from '../libs/emailChecker.js';
 dotenv.config();
 const router = express.Router();
 
@@ -27,6 +30,39 @@ router.post('/register', async (req, res) => {
         return res.status(400).json({
             error: true,
             message: 'Username already in use',
+            status: 400,
+        });
+    }
+    // check if password is valid
+    const { error: pwError, message: pwErrMessage } = pwCheck(
+        req.body.password
+    );
+    if (pwError) {
+        return res.status(400).json({
+            error: true,
+            message: pwErrMessage,
+            status: 400,
+        });
+    }
+    // check if username is valid
+    const { error: usernameError, message: usernameMessage } = usernameChecker(
+        req.body.username
+    );
+    if (usernameError) {
+        return res.status(400).json({
+            error: true,
+            message: usernameMessage,
+            status: 400,
+        });
+    }
+    // check if email is valid
+    const { error: emailError, message: emailMessage } = emailChecker(
+        req.body.email
+    );
+    if (emailError) {
+        return res.status(400).json({
+            error: true,
+            message: emailMessage,
             status: 400,
         });
     }

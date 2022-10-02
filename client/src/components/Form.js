@@ -13,11 +13,11 @@ import {
     Slide,
     Stack,
     Text,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { formTypes } from "../constants/formTypes";
-import { useShowMessage } from "../hooks/useShowMsg";
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { formTypes } from '../constants/formTypes';
+import { useShowMessage } from '../hooks/useShowMsg';
 
 export const Form = ({ formType, onSubmit }) => {
     // const inputRef = useRef(null)
@@ -25,9 +25,9 @@ export const Form = ({ formType, onSubmit }) => {
         useShowMessage();
 
     const [newUser, setNewUser] = useState({
-        username: "",
-        password: "",
-        email: "",
+        username: '',
+        password: '',
+        email: '',
     });
 
     // hide error message after 3000ms
@@ -40,7 +40,7 @@ export const Form = ({ formType, onSubmit }) => {
     // control inputs
     const handleChange = (e, property) => {
         setNewUser({ ...newUser, [property]: e.target.value });
-        setFocus({ element: "", focus: false });
+        setFocus({ element: '', focus: false });
     };
 
     // show and hide password
@@ -49,29 +49,30 @@ export const Form = ({ formType, onSubmit }) => {
 
     // async function to send request to server and validate form
     async function submitUser() {
-        if (newUser.username === "") {
-            showMsg("Please enter your username.");
-            setFocus({ element: "username", focus: true });
+        if (newUser.username === '') {
+            showMsg('Please enter your username.');
+            setFocus({ element: 'username', focus: true });
             delayHide();
             return;
         }
-        if (newUser.password === "") {
-            showMsg("Please enter your password.");
-            setFocus({ element: "password", focus: true });
+        if (newUser.password === '') {
+            showMsg('Please enter your password.');
+            setFocus({ element: 'password', focus: true });
             delayHide();
             return;
         }
-        if (newUser.email === "" && formType === formTypes.SIGN_UP) {
-            showMsg("Please enter your email.");
-            setFocus({ element: "email", focus: true });
+        if (newUser.email === '' && formType === formTypes.SIGN_UP) {
+            showMsg('Please enter your email.');
+            setFocus({ element: 'email', focus: true });
             delayHide();
             return;
         }
 
         try {
             const user = await onSubmit(newUser);
-            if (user.error) {
-                showMsg(user.errorMsg);
+            console.log(user);
+            if (user && user.error) {
+                showMsg(user.message);
                 delayHide();
                 return;
             }
@@ -82,57 +83,57 @@ export const Form = ({ formType, onSubmit }) => {
     return (
         <Container px={4}>
             <Slide
-                direction="bottom"
+                direction='bottom'
                 in={showMessage}
                 unmountOnExit={true}
                 style={{ zIndex: 10 }}
             >
-                <Box bg="tomato" p="40px" rounded="4px 4px 0 0" mt={4}>
-                    <Text fontSize="lg" color="whiteAlpha.800">
+                <Box bg='tomato' p='40px' rounded='4px 4px 0 0' mt={4}>
+                    <Text fontSize='lg' color='whiteAlpha.800'>
                         {message}
                     </Text>
                 </Box>
             </Slide>
             <form onSubmit={(e) => e.preventDefault()}>
-                <Center height="100vh">
+                <Center height='100vh'>
                     <Box
                         p={8}
-                        borderWidth="1px"
-                        w="500px"
-                        borderRadius="lg"
-                        boxShadow="lg"
-                        bg="gray.100"
+                        borderWidth='1px'
+                        w='500px'
+                        borderRadius='lg'
+                        boxShadow='lg'
+                        bg='gray.100'
                     >
-                        <Flex flexDirection="column">
-                            <Heading height="100px">
+                        <Flex flexDirection='column'>
+                            <Heading height='100px'>
                                 {formType === formTypes.LOGIN
-                                    ? "Login"
+                                    ? 'Login'
                                     : formType === formTypes.SIGN_UP
-                                    ? "Sign up"
-                                    : ""}
+                                    ? 'Sign up'
+                                    : ''}
                             </Heading>
                             <Box mt={4} flex={1}>
                                 <FormControl>
                                     <Stack spacing={8}>
                                         <Box>
-                                            <FormLabel htmlFor="username">
+                                            <FormLabel htmlFor='username'>
                                                 Username
                                             </FormLabel>
                                             <Input
-                                                border="1px"
-                                                borderColor="gray.400"
-                                                id="username"
-                                                type="text"
-                                                placeholder="username"
+                                                border='1px'
+                                                borderColor='gray.400'
+                                                id='username'
+                                                type='text'
+                                                placeholder='username'
                                                 value={newUser.username}
-                                                autoComplete="username"
+                                                autoComplete='username'
                                                 onChange={(e) =>
-                                                    handleChange(e, "username")
+                                                    handleChange(e, 'username')
                                                 }
                                                 ref={(input) => {
                                                     if (
                                                         focus.element ===
-                                                        "username"
+                                                        'username'
                                                     ) {
                                                         input?.focus();
                                                     }
@@ -141,24 +142,24 @@ export const Form = ({ formType, onSubmit }) => {
                                         </Box>
                                         {formType === formTypes.SIGN_UP && (
                                             <Box>
-                                                <FormLabel htmlFor="email">
+                                                <FormLabel htmlFor='email'>
                                                     Email address
                                                 </FormLabel>
                                                 <Input
-                                                    border="1px"
-                                                    borderColor="gray.400"
-                                                    id="email"
-                                                    type="email"
-                                                    placeholder="email"
-                                                    autoComplete="email"
+                                                    border='1px'
+                                                    borderColor='gray.400'
+                                                    id='email'
+                                                    type='email'
+                                                    placeholder='email'
+                                                    autoComplete='email'
                                                     onChange={(e) =>
-                                                        handleChange(e, "email")
+                                                        handleChange(e, 'email')
                                                     }
                                                     value={newUser.email}
                                                     ref={(input) => {
                                                         if (
                                                             focus.element ===
-                                                            "email"
+                                                            'email'
                                                         ) {
                                                             input?.focus();
                                                         }
@@ -167,60 +168,60 @@ export const Form = ({ formType, onSubmit }) => {
                                             </Box>
                                         )}
                                         <Box>
-                                            <FormLabel htmlFor="password">
+                                            <FormLabel htmlFor='password'>
                                                 Password
                                             </FormLabel>
                                             <InputGroup>
                                                 <Input
-                                                    border="1px"
-                                                    borderColor="gray.400"
-                                                    id="password"
-                                                    autoComplete="current-password"
+                                                    border='1px'
+                                                    borderColor='gray.400'
+                                                    id='password'
+                                                    autoComplete='current-password'
                                                     type={
                                                         show
-                                                            ? "text"
-                                                            : "password"
+                                                            ? 'text'
+                                                            : 'password'
                                                     }
-                                                    placeholder="password"
+                                                    placeholder='password'
                                                     onChange={(e) =>
                                                         handleChange(
                                                             e,
-                                                            "password"
+                                                            'password'
                                                         )
                                                     }
                                                     value={newUser.password}
                                                     ref={(input) => {
                                                         if (
                                                             focus.element ===
-                                                            "password"
+                                                            'password'
                                                         ) {
                                                             input?.focus();
                                                         }
                                                     }}
                                                 />
-                                                <InputRightElement width="4.5rem">
+                                                <InputRightElement width='4.5rem'>
                                                     <Button
-                                                        h="1.75rem"
-                                                        size="sm"
+                                                        h='1.75rem'
+                                                        size='sm'
                                                         onClick={handleClick}
                                                     >
-                                                        {show ? "Hide" : "Show"}
+                                                        {show ? 'Hide' : 'Show'}
                                                     </Button>
                                                 </InputRightElement>
                                             </InputGroup>
                                         </Box>
                                         <Box>
                                             <Button
-                                                w="100%"
-                                                colorScheme="teal"
+                                                w='100%'
+                                                colorScheme='teal'
                                                 onClick={submitUser}
                                             >
                                                 {formType === formTypes.LOGIN
-                                                    ? "Login"
-                                                    : "Sign up"}
+                                                    ? 'Login'
+                                                    : 'Sign up'}
                                             </Button>
                                         </Box>
-                                        <Text color="gray.400">
+                                        <Text color='gray.400'>
                                             By signing up to Global, you agree
                                             to our terms of service and privacy
                                             policy.
@@ -228,14 +229,14 @@ export const Form = ({ formType, onSubmit }) => {
                                         <Link
                                             to={
                                                 formType === formTypes.LOGIN
-                                                    ? "/sign-up"
-                                                    : "/sign-in"
+                                                    ? '/sign-up'
+                                                    : '/sign-in'
                                             }
                                         >
-                                            <Text textDecoration={"underline"}>
+                                            <Text textDecoration={'underline'}>
                                                 {formType === formTypes.LOGIN
                                                     ? "Don't have an account? Sign up"
-                                                    : "Already have an account? Sign in"}
+                                                    : 'Already have an account? Sign in'}
                                             </Text>
                                         </Link>
                                     </Stack>

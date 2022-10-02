@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { loginAction } from "../components/auth/authMethods";
-import { Form } from "../components/Form";
-import { formTypes } from "../constants/formTypes";
-import { useUser } from "../context/UserContext";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginAction } from '../components/auth/authMethods';
+import { Form } from '../components/Form';
+import { formTypes } from '../constants/formTypes';
+import { useUser } from '../context/UserContext';
 
 export const SignIn = () => {
     const { setUser, user } = useUser();
     const navigate = useNavigate();
     const [msg, setMsg] = useState({
-        text: "",
+        text: '',
         showText: false,
     });
 
@@ -21,12 +21,12 @@ export const SignIn = () => {
 
             if (!logInError) {
                 setUser(loggedInUser);
-                navigate("/");
+                navigate('/');
             }
 
             return loggedInUser;
         } catch (error) {
-            console.log(error, "here");
+            console.log(error, 'here');
         }
     };
     return (

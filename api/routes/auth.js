@@ -80,7 +80,7 @@ router.post('/register', async (req, res) => {
         const savedUser = await newUser.save();
         res.status(200).json(savedUser);
     } catch (error) {
-        res.status(500).json({ msg: 'error saving user', errorMsg: error });
+        res.status(500).json({ msg: 'error saving user', message: error });
     }
 });
 
@@ -95,8 +95,7 @@ router.post('/login', async (req, res) => {
         //check if user wasn't found
         if (!user) {
             res.status(401).json({
-                errorMsg:
-                    'Error! No user was found with that username/password',
+                message: 'Error! No user was found with that username/password',
                 error: true,
                 status: 401,
             });
@@ -126,8 +125,7 @@ router.post('/login', async (req, res) => {
         //check if decrypted password matches password in body object
         if (OriginalPassword !== req.body.password) {
             res.status(401).json({
-                errorMsg:
-                    'Error! No user was found with that username/password',
+                message: 'Error! No user was found with that username/password',
                 error: true,
                 status: 401,
             });
